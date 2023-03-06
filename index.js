@@ -8,23 +8,13 @@ const app = express()
 const saltrounds = 10;
 app.use(express.json())
 app.use(express.urlencoded())
-app.use(cors({
-    origin: "*"
-}))
+app.use(cors())
 
 
 app.post("/login", (req, res) => {
     const { email, password } = req.body
     signupModel.findOne({ email: email }, (err, user) => {
-        bcrypt.genSalt(saltrounds, (err, salt) => {
-            if (err) {
-                console.log(err)
-            }
-            console.log(salt)
-        bcrypt.hash(password, salt,async (err, password) => {
-        if (err){
-            console.log(err)
-        }
+        
         bcrypt.compare(password,user.password,(err,password)=>{
         
         })
@@ -39,8 +29,7 @@ app.post("/login", (req, res) => {
         else {
             res.send({ msg: "user not exits" })
         }
-    })  
-})
+
 })
 })
 app.post("/signup", async (req, res) => {
