@@ -14,23 +14,25 @@ app.use(cors())
 app.post("/login", (req, res) => {
     const { email, password } = req.body
     signupModel.findOne({ email: email }, (err, user) => {
-        
-        bcrypt.compare(password,user.password,(err,password)=>{
-        
-        })
+
+
         if (user) {
-            if (password === user.password) {
-                res.send({ msg: "login success", user: user })
+            
+                bcrypt.compare(password, user.password, (err, password) => {
+                    if (err) {
+                        res.send({ msg: "invalid data" })
+                    } else {
+                        res.send({ msg: "login success", user: user })
+                    }
+                })
+               
+        
             }
-            else {
-                res.send({ msg: "password didn't matched" })
-            }
-        }
         else {
             res.send({ msg: "user not exits" })
         }
 
-})
+    })
 })
 app.post("/signup", async (req, res) => {
     console.log("hi")
@@ -40,17 +42,17 @@ app.post("/signup", async (req, res) => {
             console.log(err)
         }
         console.log(salt)
-        bcrypt.hash(password, salt,async (err, password) => {
-            if (err){
+        bcrypt.hash(password, salt, async (err, password) => {
+            if (err) {
                 console.log(err)
             }
-            else{
+            else {
                 var user = new signupModel({
                     firstName,
                     lastName,
                     email,
                     password
-                }) 
+                })
                 console.log(user)
                 await user.save()
                 res.send({ msg: "user is succeesfully registered" })
