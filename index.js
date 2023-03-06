@@ -12,9 +12,9 @@ const userRouter=require("./router/userRouter")
 app.use("/",userRouter)
 
 
-app.listen(7010, async () => {
+app.listen(7010,  () => {
     try {
-         await connection;
+          connection;
         console.log("server started")
     }
     catch (err) {
