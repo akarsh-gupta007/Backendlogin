@@ -1,13 +1,13 @@
 const router=require("express").Router();
 const bcrypt = require("bcrypt")
-const signupModel = require("../model/signupmodel")
+const signupModel = require("../model/signupmodel.js")
 router.post("/login", async(req, res) => {
 
     try{
         const user=await signupModel.findOne({email:req.body.email});
-        !user && res.status(404).json({msg:"invalid data"})
+        !user && res.status(404).send({msg:"invalid data"})
         const validpassword=await bcrypt.compare(req.body.password,user.password)
-        !validpassword && res.status(400).json({msg:"invalid data"})
+        !validpassword && res.status(400).send({msg:"invalid data"})
         res.status(200)
         res.send({ msg: "login success", user: user })
 
@@ -60,7 +60,8 @@ router.post("/signup", async (req, res) => {
         const user = await newUser.save();
         res.status(200).json(user);
       } catch (err) {
-        res.status(500).json(err)
+        res.status(500)
+        console.log(err)
       }
 
 

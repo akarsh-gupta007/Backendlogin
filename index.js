@@ -1,12 +1,11 @@
 const express = require("express")
 const connection = require("./config/config.js")
 const cors = require("cors")
+var bodyParser = require('body-parser');
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-
-const app = express()
-// const saltrounds = 10;
-app.use(express.json())
-app.use(express.urlencoded())
 app.use(cors())
 const userRouter=require("./router/userRouter")
 app.use("/",userRouter)
@@ -14,7 +13,7 @@ app.use("/",userRouter)
 
 app.listen(7010, async () => {
     try {
-        await connection;
+         await connection;
         console.log("server started")
     }
     catch (err) {
