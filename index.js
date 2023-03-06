@@ -1,5 +1,6 @@
 const express = require("express")
-const connection = require("./config/config.js")
+// const connection = require("./config/config.js")
+const connection=require("./config/db.js")
 const cors = require("cors")
 var bodyParser = require('body-parser');
 const app = express();
