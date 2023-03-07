@@ -1,5 +1,4 @@
 const express = require("express")
-// const connection = require("./config/config.js")
 const connection=require("./config/db.js")
 const cors = require("cors")
 var bodyParser = require('body-parser');
@@ -12,9 +11,9 @@ const userRouter=require("./router/userRouter")
 app.use("/",userRouter)
 
 
-app.listen(7010,  () => {
+app.listen(7020,  async() => {
     try {
-          connection;
+        await connection;
         console.log("server started")
     }
     catch (err) {
