@@ -5,7 +5,7 @@ router.post("/login", async (req, res) => {
 
     try {
         const user = await signupModel.findOne({ email: req.body.email });
-       
+
         if (!user) {
             res.send({ msg: "invalid data" })
         }
@@ -27,8 +27,8 @@ router.post("/login", async (req, res) => {
 
 })
 router.post("/signup", async (req, res) => {
-
-
+    try {
+        
     const { firstName, lastName, email, password } = req.body
 
     const exitsuser = await signupModel.findOne({ email: email }).exec()
@@ -63,6 +63,11 @@ router.post("/signup", async (req, res) => {
         })
 
     })
+    }
+    catch(err){
+        console.log(err)
+    }
+
       
 })
 
